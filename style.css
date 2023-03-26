@@ -21,7 +21,7 @@ h1 {
 
 .container {
     padding: 40px;
-    height: 100vh;
+    height: 90vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,11 +67,83 @@ button:hover {
     transform: translateY(-2px);
 }
 
-/* .popup{
-    width: 400px;
-    background: #fff;
-    border-radius: : 6px;
-    position: absolute;
+*, *::after,*::before {
+    box-sizing: border-box;
+}
+
+/* game tie */
+.tie{
+    position: fixed;
     top: 50%;
     left: 50%;
-} */
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    border: 1px solid black;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: #626c6e;
+    width: 250px;
+    max-width: 80%;
+    text-align: center;
+    padding: 50px 0px 50px;
+}
+.tie h2{
+    font-size: 38px;
+    font-weight: 500;
+    margin: 30px 0 10px;
+}
+.tie.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
+/* player X wins */
+.x_won{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    border: 1px solid black;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: #626c6e;
+    width: 250px;
+    max-width: 80%;
+    text-align: center;
+    padding: 50px 0px 50px;
+}
+.x_won h2{
+    font-size: 38px;
+    font-weight: 500;
+    margin: 30px 0 10px;
+}
+.x_won.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
+/* player O wins */
+.o_won{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    border: 1px solid black;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: #626c6e;
+    width: 250px;
+    max-width: 80%;
+    text-align: center;
+    padding: 50px 0px 50px;
+}
+.o_won h2{
+    font-size: 38px;
+    font-weight: 500;
+    margin: 30px 0 10px;
+}
+.o_won.active {
+    transform: translate(-50%, -50%) scale(1);
+}
