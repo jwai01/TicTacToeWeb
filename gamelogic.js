@@ -1,6 +1,9 @@
 let playerText = document.getElementById('playerText')
 let restartBtn = document.getElementById('restartBtn')
 let boxes = Array.from(document.getElementsByClassName('box'))
+let tie = document.getElementById('tie')
+let x_won = document.getElementById('x_won')
+let o_won = document.getElementById('o_won')
 
 winnerIndicator = getComputedStyle(document.body).getPropertyValue('--winning-blocks')
 
@@ -8,6 +11,7 @@ const O_TEXT = "O"
 const X_TEXT = "X"
 let currentPlayer = X_TEXT
 let spaces = Array(9).fill(null)
+let isGameActive = true
 
 const startGame = () => {
     boxes.forEach(box => box.addEventListener('click', boxClicked))
@@ -15,6 +19,10 @@ const startGame = () => {
 
 function boxClicked(e) {
     const id = e.target.id
+
+    if (!isGameActive) {
+        return
+    }
 
     if(!spaces[id]) {
         spaces[id] = currentPlayer
@@ -24,14 +32,25 @@ function boxClicked(e) {
         e.target.innerText = currentPlayer
 
         if(playerWon()) {
-            playerText = `${currentPlayer} has won!!!`
+            // playerText = `${currentPlayer} has won!!!`
             let winningBlocks = playerWon()
+
+            if(currentPlayer == X_TEXT) {
+                open_X_won(x_won)
+            }
+            else {
+                open_O_won(o_won)
+            }
+            isGameActive = false
 
             winningBlocks.map( box => boxes[box].style.backgroundColor=winnerIndicator)
             return
         }
 
-        //if(gameDraw())
+        if(gameDraw()) {
+            openTie(tie)
+            isGameActive = false
+        }
 
         currentPlayer = currentPlayer == X_TEXT ? O_TEXT : X_TEXT
     }
@@ -48,8 +67,11 @@ function restart() {
         box.innerText = ''
         box.style.backgroundColor=''
     })
+    closeTie(tie)
+    close_O_won(o_won)
+    close_X_won(x_won)
 
-  
+    isGameActive = true
 
     currentPlayer = X_TEXT
 }
@@ -85,7 +107,37 @@ function gameDraw() {
     return true
 }
 
+function openTie(tie) {
+    if(tie == null) return
+    tie.classList.add('active')
+}
+
+function closeTie(tie) {
+    if(tie == null) return
+    tie.classList.remove('active')
+}
+
+function open_X_won(x_won) {
+    if(x_won == null) return
+    x_won.classList.add('active')
+}
+
+function close_X_won(x_won) {
+    if(x_won == null) return
+    x_won.classList.remove('active')
+}
+
+function open_O_won(o_won) {
+    if(o_won == null) return
+    o_won.classList.add('active')
+}
+
+function close_O_won(o_won) {
+    if(tie == null) return
+    o_won.classList.remove('active')
+}
+
+
+
 
 startGame()
-
-
