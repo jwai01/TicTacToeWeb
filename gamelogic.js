@@ -17,22 +17,20 @@ const startGame = () => {
     boxes.forEach(box => box.addEventListener('click', boxClicked))
 }
 
-function boxClicked(e) {
+function boxClicked(e, num) {
     const id = e.target.id
 
     if (!isGameActive) {
         return
     }
 
-    if(!spaces[id]) {
+    if(spaces[id] == null) {
         spaces[id] = currentPlayer
 
-        console.log(spaces) //for checking "spaces" array in console 
-
         e.target.innerText = currentPlayer
+        console.log(e.target)
 
         if(playerWon()) {
-            // playerText = `${currentPlayer} has won!!!`
             let winningBlocks = playerWon()
 
             if(currentPlayer == X_TEXT) {
@@ -51,12 +49,48 @@ function boxClicked(e) {
             openTie(tie)
             isGameActive = false
         }
-
         currentPlayer = currentPlayer == X_TEXT ? O_TEXT : X_TEXT
+
+        if (currentPlayer == O_TEXT) {
+            botsmove = botcalc(spaces)
+            boxes[botsmove].click()
+        }
+    
     }
 }
 
+function botcalc(spaces) {
+    let bestScore = -99999
+    let bestMove = -1
 
+    console.log("spaces: ", spaces) //for checking "spaces" array in console 
+
+    for (i = 0; i<spaces.length; i++) {
+        if (spaces[i] == null) {
+            let score = minimax(spaces, 0, True)
+            console.log("score: ", score) //logs score
+            if (score > bestScore) 
+            {
+                bestScore = score
+                bestMove = i
+
+                console.log("best score: ", bestScore) //logs best score
+                console.log("best move: ", bestMove) //logs best move
+            }
+        }
+    }
+    return bestMove
+}
+
+        // got the ai to click the first empty box, 
+        // now i need it to click the   <------------------------------------------------
+        // best choice box with minimax algorithm
+
+
+function minimax(board, depth, isMaxing)
+{
+    return 1; 
+}
 
 restartBtn.addEventListener('click', restart)
 
